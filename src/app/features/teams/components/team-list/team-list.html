@@ -1,0 +1,22 @@
+
+<div class="team-grid">
+  @for (team of teams; track team.id) {
+    <app-team-card 
+      [team]="team" 
+      (addMember)="forwardAddMember($event)"
+      (deleteTeam)="forwardDeleteTeam($event)"
+    ></app-team-card>
+  } @empty {
+    <div class="empty-state">
+      <mat-icon>group_off</mat-icon>
+      <h3>No teams found</h3>
+      <p>Create a team to get started!</p>
+    </div>
+  }
+</div>
+
+
+
+
+
+

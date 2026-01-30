@@ -1,0 +1,94 @@
+<div class="auth-container">
+  <div class="auth-decorative-bg">
+    <div class="auth-circle auth-circle-1"></div>
+    <div class="auth-circle auth-circle-2"></div>
+    <div class="auth-circle auth-circle-3"></div>
+  </div>
+  
+  <mat-card class="auth-card">
+    <mat-card-header class="auth-header">
+      <div class="logo-circle">
+        <mat-icon>person_add</mat-icon>
+      </div>
+      <mat-card-title>Create Account</mat-card-title>
+      <div class="subtitle">Join TeamTasks today</div>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form">
+
+        <!-- Error Alert -->
+        @if (errorMessage) {
+          <div class="error-state">
+            <span>{{ errorMessage }}</span>
+          </div>
+        }
+
+        <!-- Full Name Field -->
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="outline" class="full-width" subscriptSizing="fixed">
+            <mat-label>Full Name</mat-label>
+            <input matInput formControlName="name" type="text" placeholder="John Doe">
+          </mat-form-field>
+          @if (name?.invalid && name?.touched) {
+            <div class="field-error">
+              @if (name?.hasError('required')) {
+                <span>Name is required</span>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="outline" class="full-width" subscriptSizing="fixed">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" placeholder="user@example.com">
+          </mat-form-field>
+          @if (email?.invalid && email?.touched) {
+            <div class="field-error">
+              @if (email?.hasError('required')) {
+                <span>Email is required</span>
+              }
+              @if (email?.hasError('email')) {
+                <span>Please enter a valid email</span>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="outline" class="full-width" subscriptSizing="fixed">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password">
+          </mat-form-field>
+          @if (password?.invalid && password?.touched) {
+            <div class="field-error">
+              @if (password?.hasError('required')) {
+                <span>Password is required</span>
+              }
+              @if (password?.hasError('minlength')) {
+                <span>Password must be at least 6 characters</span>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-actions">
+          <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || isSubmitting" class="full-width submit-btn">
+            @if (isSubmitting) {
+              <mat-spinner diameter="20"></mat-spinner>
+            } @else {
+              <span>Sign Up</span>
+            }
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+    
+    <mat-card-footer class="auth-footer">
+       <span class="footer-text">Already have an account? <a routerLink="/login">Sign in</a></span>
+    </mat-card-footer>
+  </mat-card>
+</div>

@@ -1,0 +1,15 @@
+.comment-form {
+  margin-top: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+::ng-deep .density-sm .mat-mdc-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+::ng-deep .density-sm .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}

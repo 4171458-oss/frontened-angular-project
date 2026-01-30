@@ -1,0 +1,27 @@
+@if (isOpen()) {
+  <div class="dialog-overlay" (click)="cancel()">
+    <div class="confirm-dialog" [ngClass]="'type-' + (data()?.type || 'danger')" (click)="$event.stopPropagation()">
+      <div class="dialog-icon">
+        <mat-icon>{{ getIcon(data()?.type || 'danger') }}</mat-icon>
+      </div>
+      
+      <h2 class="dialog-title">{{ data()?.title || 'Confirm' }}</h2>
+      <p class="dialog-message">{{ data()?.message || 'Are you sure?' }}</p>
+      
+      <div class="dialog-actions">
+        @if (data()?.cancelText) {
+          <button mat-button (click)="cancel()" class="cancel-btn">
+            {{ data()?.cancelText }}
+          </button>
+        }
+        <button 
+          mat-raised-button 
+          [color]="(data()?.type === 'danger') ? 'warn' : 'primary'"
+          (click)="confirm()"
+          class="confirm-btn">
+          {{ data()?.confirmText || 'Confirm' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

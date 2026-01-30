@@ -1,0 +1,19 @@
+.comment-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.comments-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.loading, .empty-state {
+  text-align: center;
+  padding: 16px;
+  color: #888;
+  font-size: 13px;
+  font-style: italic;
+}

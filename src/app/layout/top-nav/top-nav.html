@@ -1,0 +1,29 @@
+<mat-toolbar class="app-toolbar">
+  <div class="logo-area">
+    <mat-icon class="logo-icon">check_circle_outline</mat-icon>
+    <span class="logo-text">TeamTasks</span>
+  </div>
+  
+  <span class="spacer"></span>
+  
+  <div class="user-info" *ngIf="user() as u">
+    <div class="user-profile" [matMenuTriggerFor]="userMenu">
+      <div class="avatar-circle">
+        {{ u.name.charAt(0).toUpperCase() }}
+      </div>
+    </div>
+    
+    <mat-menu #userMenu="matMenu">
+      <div class="menu-header">
+        <p class="user-name">{{ u.name }}</p>
+        <p class="user-email">{{ u.email }}</p>
+      </div>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="onClickLogout()">
+        <mat-icon>logout</mat-icon>
+        <span>Sign out</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>
+

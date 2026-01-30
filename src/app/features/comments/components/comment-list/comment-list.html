@@ -1,0 +1,18 @@
+<div class="comment-list-container">
+  <div class="comments-stream">
+    @if (isLoading()) {
+      <div class="loading">Loading comments...</div>
+    } @else {
+      @for (comment of comments(); track comment.id) {
+        <app-comment-item [comment]="comment" />
+      } @empty {
+        <div class="empty-state">No comments yet.</div>
+      }
+    }
+  </div>
+
+  <app-comment-form 
+    [isSubmitting]="isCreating()"
+    (submitComment)="onCommentSubmit($event)" 
+  />
+</div>

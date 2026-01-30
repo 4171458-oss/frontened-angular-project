@@ -1,0 +1,90 @@
+<div class="page-container">
+  <div class="page-decorative-bg">
+    <div class="decorative-circle circle-2"></div>
+    <div class="decorative-circle circle-3"></div>
+    <div class="decorative-circle circle-4"></div>
+  </div>
+  
+  <div class="section-header">
+    <div class="header-content">
+      <h1>Task Board</h1>
+      <p style="margin: 0; color: #666;">Manage tasks for this project</p>
+    </div>
+  </div>
+
+  <ng-container *ngIf="state() as vm">
+    @if (vm.isLoading) {
+      <div class="loading-state">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>Loading tasks...</p>
+      </div>
+    }
+
+    @if (vm.error) {
+      <div class="error-state">
+        <mat-icon color="warn" style="font-size: 48px; width: 48px; height: 48px;">error_outline</mat-icon>
+        <p>{{ vm.error }}</p>
+        <p *ngIf="vm.error === 'No Project Selected'">Please select a project from the projects page.</p>
+      </div>
+    }
+
+    @if (!vm.isLoading && !vm.error) {
+      <div class="board-columns" cdkDropListGroup>
+        <div class="board-lane">
+          <app-task-column 
+            title="Backlog" 
+            listId="TODO"
+            [connectedLists]="connectedLists"
+            [tasks]="todoTasks()" 
+            statusClass="todo"
+            (taskClick)="openEditTask($event)"
+            (taskDrop)="onTaskDrop($event)"
+            (addTask)="openCreateTask()"
+          ></app-task-column>
+        </div>
+        
+        <div class="board-lane">
+          <app-task-column 
+            title="In Progress" 
+            listId="IN_PROGRESS"
+            [connectedLists]="connectedLists"
+            [tasks]="inProgressTasks()" 
+            statusClass="inprogress"
+            (taskClick)="openEditTask($event)"
+            (taskDrop)="onTaskDrop($event)"
+            (addTask)="openCreateTask()"
+          ></app-task-column>
+        </div>
+        
+        <div class="board-lane">
+          <app-task-column 
+            title="Done" 
+            listId="DONE"
+            [connectedLists]="connectedLists"
+            [tasks]="doneTasks()" 
+            statusClass="done"
+            (taskClick)="openEditTask($event)"
+            (taskDrop)="onTaskDrop($event)"
+            (addTask)="openCreateTask()"
+          ></app-task-column>
+        </div>
+      </div>
+    }
+  </ng-container>
+
+  @if (isCreateTaskOpen()) {
+    <app-task-create-dialog
+      (taskCreated)="handleCreateTask($event)"
+      (dialogClosed)="closeCreateTask()"
+    ></app-task-create-dialog>
+  }
+
+  @if (selectedTask()) {
+    <app-task-editor-dialog
+      [task]="selectedTask()!"
+      (save)="handleUpdateTask($event)"
+      (delete)="handleDeleteTask($event)"
+      (cancel)="closeEditTask()"
+    ></app-task-editor-dialog>
+  }
+</div>

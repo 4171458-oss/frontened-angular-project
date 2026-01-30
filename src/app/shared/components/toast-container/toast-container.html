@@ -1,0 +1,14 @@
+<div class="toast-container">
+  @for (toast of toasts(); track toast.id) {
+    <div 
+      class="toast" 
+      [class]="'toast-' + toast.type"
+      @toastAnimation>
+      <mat-icon class="toast-icon">{{ getIcon(toast.type) }}</mat-icon>
+      <span class="toast-message">{{ toast.message }}</span>
+      <button mat-icon-button class="toast-close" (click)="close(toast.id)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  }
+</div>

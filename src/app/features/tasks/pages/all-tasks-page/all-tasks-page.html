@@ -1,0 +1,88 @@
+<div class="page-container">
+  <div class="page-decorative-bg">
+    <div class="decorative-circle circle-2"></div>
+    <div class="decorative-circle circle-3"></div>
+    <div class="decorative-circle circle-4"></div>
+  </div>
+  
+  <div class="section-header">
+    <div class="header-content">
+      <h1>All Tasks</h1>
+      <p style="margin: 0; color: #666;">View all your tasks across all projects</p>
+    </div>
+  </div>
+
+  <ng-container *ngIf="state() as vm">
+    @if (vm.isLoading) {
+      <div class="loading-state">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>Loading tasks...</p>
+      </div>
+    }
+
+    @if (vm.error) {
+      <div class="error-state">
+        <mat-icon color="warn" style="font-size: 48px; width: 48px; height: 48px;">error_outline</mat-icon>
+        <p>{{ vm.error }}</p>
+      </div>
+    }
+
+    @if (!vm.isLoading && !vm.error) {
+      @if (vm.tasks.length === 0) {
+        <div class="empty-state">
+          <mat-icon>task_alt</mat-icon>
+          <h3>No Tasks Found</h3>
+          <p>You don't have any tasks yet. Create a task from a project's task board.</p>
+        </div>
+      } @else {
+        <div class="tasks-grid">
+          @for (task of vm.tasks; track task.id) {
+            <mat-card class="task-card" (click)="openEditTask(task)">
+              <mat-card-header>
+                <mat-icon mat-card-avatar [style.color]="getPriorityColor(task.priority)">assignment</mat-icon>
+                <mat-card-title>{{ task.title }}</mat-card-title>
+                <mat-card-subtitle>Project ID: {{ task.projectId }}</mat-card-subtitle>
+              </mat-card-header>
+              
+              <mat-card-content>
+                <p class="task-description">{{ task.description || 'No description' }}</p>
+                
+                <div class="task-meta">
+                  <mat-chip-set>
+                    <mat-chip [style.background-color]="getPriorityColor(task.priority) === 'warn' ? '#f44336' : getPriorityColor(task.priority) === 'accent' ? '#ff9800' : '#4caf50'" style="color: white;">
+                      {{ task.priority }}
+                    </mat-chip>
+                    <mat-chip>{{ getStatusLabel(task.status) }}</mat-chip>
+                  </mat-chip-set>
+                  
+                  @if (task.dueDate) {
+                    <div class="due-date">
+                      <mat-icon>event</mat-icon>
+                      <span>{{ task.dueDate | date:'short' }}</span>
+                    </div>
+                  }
+                </div>
+              </mat-card-content>
+              
+              <mat-card-actions align="end">
+                <button mat-button color="primary" (click)="$event.stopPropagation(); navigateToTaskBoard(task)">
+                  <mat-icon>view_kanban</mat-icon>
+                  VIEW BOARD
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          }
+        </div>
+      }
+    }
+  </ng-container>
+
+  @if (selectedTask()) {
+    <app-task-editor-dialog
+      [task]="selectedTask()!"
+      (save)="handleUpdateTask($event)"
+      (delete)="handleDeleteTask($event)"
+      (cancel)="closeEditTask()"
+    ></app-task-editor-dialog>
+  }
+</div>

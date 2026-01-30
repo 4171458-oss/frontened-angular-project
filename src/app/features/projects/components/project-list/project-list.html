@@ -1,0 +1,15 @@
+<div class="project-grid">
+  @for (project of projects; track project.id) {
+    <app-project-card 
+      [project]="project" 
+      [teamId]="teamId"
+      (deleteProject)="onDeleteProject($event)"
+    ></app-project-card>
+  } @empty {
+    <div class="empty-state">
+      <mat-icon>folder_off</mat-icon>
+      <h3>No projects yet</h3>
+      <p>Create a project to start managing tasks.</p>
+    </div>
+  }
+</div>

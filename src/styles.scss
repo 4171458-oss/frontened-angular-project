@@ -1,0 +1,346 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$theme: mat.define-theme();
+
+@include mat.all-component-themes($theme);
+
+html, body { 
+  height: 100%; 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+  background: linear-gradient(135deg, #F7F8FA 0%, #E8F0FE 100%);
+  background-attachment: fixed;
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Primary Color Override (Deep Blue) */
+/* Note: For full Material Palette override significant changes to angular.json or theme file required. 
+   Simulating main primary color override via global styles for key elements */
+:root {
+  --primary-color: #2F5BEA;
+  --primary-hover: #1c4bd6;
+  --secondary-color: #22B8A0;
+}
+
+/* Override Material Buttons to match Primary Color */
+.mat-mdc-button.mat-primary, .mat-mdc-raised-button.mat-primary, .mat-mdc-flat-button.mat-primary {
+  --mdc-filled-button-container-color: #2F5BEA !important;
+  --mdc-protected-button-container-color: #2F5BEA !important;
+}
+
+/* Secondary Actions */
+a {
+  color: #2F5BEA; /* Links */
+}
+
+.secondary-text {
+  color: #22B8A0;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.page-container {
+  padding: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.mat-mdc-card {
+  margin-bottom: 20px;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(47, 91, 234, 0.15) !important;
+  }
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #f0f0f0;
+
+  .header-content {
+    h1, h2 {
+      margin: 0 0 8px 0;
+      color: #202124;
+      font-weight: 500;
+    }
+    
+    p {
+      margin: 0;
+      color: #5f6368;
+      font-size: 14px;
+    }
+  }
+  
+  button {
+    box-shadow: 0 2px 4px rgba(47, 91, 234, 0.2);
+    
+    &:hover {
+      box-shadow: 0 4px 8px rgba(47, 91, 234, 0.3);
+    }
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 64px 32px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  border: 2px dashed rgba(47, 91, 234, 0.3);
+  color: #5f6368;
+  max-width: 500px;
+  margin: 40px auto;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  
+  &:hover {
+    border-color: #2F5BEA;
+    box-shadow: 0 8px 30px rgba(47, 91, 234, 0.2);
+    transform: translateY(-4px);
+  }
+  
+  mat-icon {
+    font-size: 80px;
+    height: 80px;
+    width: 80px;
+    margin-bottom: 24px;
+    opacity: 0.5;
+    color: #2F5BEA;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 4px 8px rgba(47, 91, 234, 0.3));
+  }
+  
+  h3 {
+    font-size: 24px;
+    font-weight: 500;
+    color: #202124;
+    margin: 0 0 12px 0;
+  }
+  
+  p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #5f6368;
+    margin: 0 0 24px 0;
+  }
+  
+  button {
+    margin-top: 8px;
+    box-shadow: 0 4px 12px rgba(47, 91, 234, 0.3);
+    
+    &:hover {
+      box-shadow: 0 6px 20px rgba(47, 91, 234, 0.4);
+    }
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.loading-state {
+  text-align: center;
+  padding: 64px 32px;
+  
+  mat-spinner {
+    margin: 0 auto 24px;
+  }
+  
+  p {
+    color: #5f6368;
+    font-size: 15px;
+    margin: 0;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.error-state {
+  padding: 20px;
+  background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+  color: #c62828;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-left: 4px solid #d32f2f;
+  box-shadow: 0 2px 8px rgba(211, 47, 47, 0.1);
+  
+  mat-icon {
+    color: #d32f2f;
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+  
+  p {
+    margin: 0;
+    line-height: 1.5;
+    flex: 1;
+  }
+}
+
+.loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.7);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Smooth transitions for all interactive elements */
+button, a, .mat-mdc-card, .mat-mdc-list-item {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Card hover effect */
+.mat-mdc-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  }
+}
+
+/* Button hover effects */
+button:not([disabled]) {
+  &:hover {
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+/* Fade in animation for pages */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-container, .auth-container {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Dialog overlay animation */
+.dialog-overlay {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Decorative background circles for all pages */
+.page-decorative-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.decorative-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.08;
+  animation: float 8s ease-in-out infinite;
+}
+
+.circle-1 {
+  width: 400px;
+  height: 400px;
+  background: #2F5BEA;
+  top: -150px;
+  right: -100px;
+  animation-delay: 0s;
+}
+
+.circle-2 {
+  width: 300px;
+  height: 300px;
+  background: #22B8A0;
+  bottom: -100px;
+  left: -80px;
+  animation-delay: 2s;
+}
+
+.circle-3 {
+  width: 250px;
+  height: 250px;
+  background: #2F5BEA;
+  top: 40%;
+  left: 5%;
+  animation-delay: 4s;
+}
+
+.circle-4 {
+  width: 200px;
+  height: 200px;
+  background: #22B8A0;
+  top: 20%;
+  right: 15%;
+  animation-delay: 6s;
+}
+

@@ -1,0 +1,23 @@
+.app-sidenav-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-sidenav {
+  width: 250px;
+  background: white;
+  border-right: 1px solid rgba(0,0,0,0.12);
+}
+
+.app-sidenav-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.page-scroll-container {
+  flex: 1;
+  overflow: auto;
+  background-color: #f5f7fb;
+}

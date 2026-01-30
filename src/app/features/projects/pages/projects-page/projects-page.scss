@@ -1,0 +1,15 @@
+.header-content {
+  margin-bottom: 24px;
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 48px;
+  
+  mat-spinner {
+    margin-bottom: 16px;
+  }
+}

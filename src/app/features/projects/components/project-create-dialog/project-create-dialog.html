@@ -1,0 +1,30 @@
+<div class="dialog-overlay">
+  <div class="dialog-card mat-elevation-z4">
+    <div class="dialog-header">
+      <h2>Create New Project</h2>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="dialog-content">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Project Name</mat-label>
+          <input matInput formControlName="name" placeholder="Website Redesign">
+          <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
+          <mat-error *ngIf="form.get('name')?.hasError('minlength')">Min 3 characters</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description" rows="3" placeholder="Overview of the project..."></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="dialog-actions">
+        <button mat-button type="button" (click)="onCancel()">Cancel</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isSubmitting">
+          {{ isSubmitting ? 'Creating...' : 'Create Project' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

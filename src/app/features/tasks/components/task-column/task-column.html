@@ -1,0 +1,36 @@
+<div class="column-header">
+  <h3 [ngClass]="statusClass || ''">{{ title }}</h3>
+</div>
+
+<div 
+  class="task-list"
+  cdkDropList
+  [id]="listId"
+  [cdkDropListData]="tasks"
+  [cdkDropListConnectedTo]="connectedLists"
+  (cdkDropListDropped)="onDrop($event)">
+  
+  @for (task of tasks; track task.id) {
+    <div class="task-card-wrapper" cdkDrag [cdkDragData]="task" (click)="taskClick.emit(task)">
+      <div class="task-card">
+        <div class="task-title">{{ task.title }}</div>
+        
+        @if (task.description) {
+          <p class="task-desc">{{ task.description }}</p>
+        }
+        
+        <div class="task-meta">
+          <span class="priority-tag" [ngClass]="getPriorityClass(task.priority)">
+            {{ task.priority | titlecase }}
+          </span>
+        </div>
+      </div>
+      <!-- Preview/Placeholder when dragging -->
+      <div *cdkDragPlaceholder class="task-card-placeholder"></div>
+    </div>
+  }
+</div>
+
+<button class="add-task-btn" (click)="addTask.emit()">
+  <mat-icon>add</mat-icon> Add task
+</button>

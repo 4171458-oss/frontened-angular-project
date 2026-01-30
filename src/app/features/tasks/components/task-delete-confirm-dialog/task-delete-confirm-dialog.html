@@ -1,0 +1,16 @@
+<div class="dialog-overlay" (click)="onCancel()" tabindex="0">
+  <div class="dialog-card mat-elevation-z4" (click)="$event.stopPropagation()">
+    <div class="dialog-header">
+      <h2>Delete Task?</h2>
+    </div>
+    <div class="dialog-content">
+      <p>Are you sure you want to delete "<strong>{{ task.title }}</strong>"? This action cannot be undone.</p>
+    </div>
+    
+    <div class="dialog-actions">
+      <button mat-button (click)="onCancel()">Cancel</button>
+      <button mat-raised-button color="warn" (click)="onConfirm()">Delete</button>
+    </div>
+  </div>
+</div>
+

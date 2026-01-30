@@ -1,0 +1,16 @@
+<mat-sidenav-container class="app-sidenav-container">
+  <mat-sidenav mode="side" opened class="app-sidenav" [fixedInViewport]="false">
+    <app-side-nav></app-side-nav>
+  </mat-sidenav>
+  <mat-sidenav-content class="app-sidenav-content">
+    <app-top-nav></app-top-nav>
+    <app-breadcrumb></app-breadcrumb>
+    <div class="page-scroll-container">
+      <div class="page-container">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+

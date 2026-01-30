@@ -1,0 +1,68 @@
+<div class="page-decorative-bg">
+  <div class="decorative-circle circle-1"></div>
+  <div class="decorative-circle circle-2"></div>
+  <div class="decorative-circle circle-3"></div>
+</div>
+
+<div class="section-header">
+  <div class="header-content">
+    <h1>Teams</h1>
+    <p>Manage your teams and teammates</p>
+  </div>
+  <button mat-raised-button color="primary" (click)="openCreateTeamModal()">
+    <mat-icon>add</mat-icon>
+    Create Team
+  </button>
+</div>
+
+<ng-container *ngIf="state() as vm">
+  @if (vm.isLoading) {
+    <div class="loading-state">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading teams...</p>
+    </div>
+  }
+
+  @if (!vm.isLoading && vm.error) {
+    <div class="error-state">
+      <mat-icon>error_outline</mat-icon>
+      <p>{{ vm.error }}</p>
+    </div>
+  }
+
+  @if (!vm.isLoading && !vm.error && vm.teams.length === 0) {
+    <div class="empty-state">
+      <mat-icon>group_off</mat-icon>
+      <h3>No teams yet</h3>
+      <p>Create your first team to start collaborating!</p>
+      <button mat-stroked-button color="primary" (click)="openCreateTeamModal()">Create Team</button>
+    </div>
+  }
+
+  @if (!vm.isLoading && !vm.error && vm.teams.length > 0) {
+    <div>
+      <app-team-list 
+        [teams]="vm.teams" 
+        (addMember)="openAddMemberModal($event)"
+        (deleteTeam)="onDeleteTeam($event)"
+      ></app-team-list>
+    </div>
+  }
+</ng-container>
+
+<app-team-add-member-dialog
+  *ngIf="isAddMemberDialogOpen()"
+  [teamid]="selectedTeamId()!.toString()"
+  [isLoading]="isAddingMemberLoading()"
+  [error]="addMemberError()"
+  [users]="users()"
+  (onClose)="closeAddMemberModal()"
+  (addMember)="onAddMemberSubmit($event)"
+></app-team-add-member-dialog>
+
+<app-team-create-dialog
+  *ngIf="isCreateTeamModalOpen()"
+  (onClose)="closeCreateTeamModal()"
+  (createTeam)="onCreateTeamSubmit($event)"
+></app-team-create-dialog>
+

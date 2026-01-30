@@ -1,0 +1,88 @@
+<div class="dialog-overlay" (click)="onCancel()" tabindex="0">
+    <div class="dialog-card mat-elevation-z8" (click)="$event.stopPropagation()">
+        
+        <div class="dialog-header">
+            <div class="title-section">
+                <mat-icon color="primary">assignment</mat-icon>
+                <h2>{{ modalTitle }}</h2>
+            </div>
+            <button mat-icon-button (click)="onCancel()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        
+        <mat-divider></mat-divider>
+
+        <div class="dialog-body">
+            <div class="main-content">
+                <form [formGroup]="form" (ngSubmit)="onSave()" class="task-form">
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Title</mat-label>
+                        <input matInput formControlName="title" placeholder="Task title">
+                        <mat-error *ngIf="form.get('title')?.hasError('required')">Title is required</mat-error>
+                        <mat-error *ngIf="form.get('title')?.hasError('minlength')">Min 3 characters</mat-error>
+                    </mat-form-field>
+                    
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput formControlName="description" rows="6" placeholder="Detailed description..."></textarea>
+                    </mat-form-field>
+                    
+                    <div class="form-row">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Due Date</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="dueDate">
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        
+                        <mat-form-field appearance="outline">
+                            <mat-label>Priority</mat-label>
+                            <mat-select formControlName="priority">
+                                <mat-option value="LOW">Low</mat-option>
+                                <mat-option value="MEDIUM">Medium</mat-option>
+                                <mat-option value="HIGH">High</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                             <mat-label>Status</mat-label>
+                             <mat-select formControlName="status">
+                                 <mat-option value="TODO">To Do</mat-option>
+                                 <mat-option value="IN_PROGRESS">In Progress</mat-option>
+                                 <mat-option value="DONE">Done</mat-option>
+                             </mat-select>
+                        </mat-form-field>
+                    </div>
+                    
+                    <div class="actions">
+                        <button mat-button color="warn" type="button" (click)="onDeleteClick()">
+                            <mat-icon>delete</mat-icon> Delete Task
+                        </button>
+                        <div class="right-actions">
+                            <button mat-button type="button" (click)="onCancel()">Cancel</button>
+                            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isSubmitting">
+                                {{ isSubmitting ? 'Saving...' : 'Save Changes' }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="side-panel">
+                <h3>Comments</h3>
+                <mat-divider></mat-divider>
+                <div class="comments-wrapper">
+                    <app-comment-list [taskId]="task.id"></app-comment-list>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-task-delete-confirm-dialog
+  *ngIf="showDeleteConfirm()"
+  [task]="task"
+  (confirm)="onDeleteConfirm()"
+  (cancel)="onDeleteCancel()"
+></app-task-delete-confirm-dialog>

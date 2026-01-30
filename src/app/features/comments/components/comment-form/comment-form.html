@@ -1,0 +1,20 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="comment-form">
+  <mat-form-field appearance="outline" class="full-width density-sm">
+    <mat-label>Add a comment</mat-label>
+    <textarea 
+      matInput
+      formControlName="body" 
+      placeholder="Discuss this task..." 
+      rows="2"
+      (keydown.control.enter)="onSubmit()"
+    ></textarea>
+    <button 
+        mat-icon-button 
+        matSuffix 
+        type="submit" 
+        [disabled]="form.invalid || isSubmitting"
+        color="primary">
+        <mat-icon>send</mat-icon>
+    </button>
+  </mat-form-field>
+</form>

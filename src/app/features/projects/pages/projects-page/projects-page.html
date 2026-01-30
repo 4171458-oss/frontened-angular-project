@@ -1,0 +1,53 @@
+<div class="page-decorative-bg">
+  <div class="decorative-circle circle-1"></div>
+  <div class="decorative-circle circle-2"></div>
+  <div class="decorative-circle circle-4"></div>
+</div>
+
+<div class="section-header">
+  <div class="header-content">
+    <h1>Projects</h1>
+    @if (currentTeamId()) {
+      <p>Projects for team #{{ currentTeamId() }}</p>
+    } @else {
+      <p>All projects across teams</p>
+    }
+  </div>
+  @if (currentTeamId()) {
+    <button mat-raised-button color="primary" (click)="openCreateProjectModal()">
+      <mat-icon>add</mat-icon>
+      New Project
+    </button>
+  }
+</div>
+
+<section class="projects-content" *ngIf="state() as s">
+  
+  @if (s.isLoading) {
+    <div class="loading-state">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading projects...</p>
+    </div>
+  }
+
+  @if (s.error) {
+    <div class="error-state">
+      <mat-icon>error_outline</mat-icon>
+      <p>{{ s.error }}</p>
+    </div>
+  }
+
+  @if (!s.isLoading && !s.error) {
+    <app-project-list 
+      [projects]="filteredProjects()"
+      [teamId]="currentTeamId() || 0"
+      (deleteProject)="onDeleteProject($event)"
+    ></app-project-list>
+  }
+</section>
+
+<app-project-create-dialog
+  *ngIf="createProjectModalOpen()"
+  (close)="closeCreateProjectModal()"
+  (createProject)="onCreateProjectSubmit($event)"
+></app-project-create-dialog>

@@ -1,0 +1,64 @@
+.sidenav-list {
+  padding: 12px 16px !important;
+  width: 240px; /* Explicit width to match guidelines */
+}
+
+/* We don't use the old header style anymore */
+.sidenav-header {
+  display: none; 
+}
+
+.nav-item-wrapper {
+  margin-bottom: 4px;
+}
+
+.google-nav-item {
+  border-radius: 0 24px 24px 0 !important; /* Rounded Right Side */
+  height: 48px !important;
+  color: #3c4043 !important;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500 !important;
+  margin-right: 8px; /* Slight gap from edge */
+  
+  /* Override Material default padding and text */
+  &.mat-mdc-list-item {
+    padding-left: 24px !important; /* Move content slightly inward */
+  }
+
+  mat-icon {
+    color: #5f6368;
+    margin-right: 12px;
+  }
+  
+  &:hover:not(.active-link) {
+    background-color: #f1f3f4 !important;
+  }
+}
+
+.active-link {
+  background-color: #e8f0fe !important; /* Light blue background */
+  color: #1967d2 !important; /* Google Blue Text */
+  
+  mat-icon {
+    color: #1967d2 !important;
+  }
+  
+  /* Bold the text for active state if desired */
+  span {
+    font-weight: 600;
+  }
+}
+
+/* Adjust for RTL since we switched global dir to RTL */
+:host-context([dir="rtl"]) {
+  .google-nav-item {
+    border-radius: 24px 0 0 24px !important; /* Round Left Side instead */
+    margin-right: 0;
+    margin-left: 8px;
+    
+    mat-icon {
+      margin-right: 0;
+      margin-left: 12px;
+    }
+  }
+}

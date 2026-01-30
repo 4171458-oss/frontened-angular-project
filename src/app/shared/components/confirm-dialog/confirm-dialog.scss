@@ -1,0 +1,113 @@
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.confirm-dialog {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 450px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+  animation: scaleIn 0.3s ease-out;
+}
+
+.dialog-icon {
+  margin: 0 auto 24px;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.type-danger .dialog-icon {
+  background: #ffebee;
+  
+  mat-icon {
+    color: #d32f2f;
+  }
+}
+
+.type-warning .dialog-icon {
+  background: #fff3e0;
+  
+  mat-icon {
+    color: #f57c00;
+  }
+}
+
+.type-info .dialog-icon {
+  background: #e3f2fd;
+  
+  mat-icon {
+    color: #1976d2;
+  }
+}
+
+.dialog-title {
+  font-size: 22px;
+  font-weight: 500;
+  color: #202124;
+  margin: 0 0 12px 0;
+}
+
+.dialog-message {
+  font-size: 15px;
+  color: #5f6368;
+  line-height: 1.6;
+  margin: 0 0 32px 0;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  
+  button {
+    min-width: 100px;
+    height: 40px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
